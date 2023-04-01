@@ -1,6 +1,6 @@
 import { Stack } from "./07_ADT_栈"
 import { Queue } from './02_ADT_队列'
-const infixStr = '5 + 2 * 3 - 4 * 7'
+const infixStr = '( ( 5 + 2 ) * 3 - 4 ) * 7'
 
 function infixToPostfix(infix: string) {
   // 中缀转后缀
@@ -21,7 +21,7 @@ function infixToPostfix(infix: string) {
       clearStackToQueue(str, stack, queue, true)
       return queue
     }
-    // 3.将判断中缀是操作数还是操作符
+    // 3.将判断中缀是操作数还是操作符还是左或右括号
     if (isNormalPriority(str)) {
       console.log(idx, ': str是+或-');
       if (isStackHighestPriority(stack)) {
@@ -39,6 +39,15 @@ function infixToPostfix(infix: string) {
       // 当前操作符是最高优先级（没有括号情况下），所以直接入栈
       stack.push(str)
       stack.toString()
+    } else if (isBracket(str)) {
+      // 当前操作符是左或右括号
+      if (str === '(') {
+        // 如果是左括号，直接入栈
+        stack.push(str)
+      } else {
+        // 如果是右括号，则将之前直到左括号的所有栈内操作符都入队
+        clearStackToQueue(str, stack, queue, false)
+      }
     } else {
       // console.log(idx, ': str是操作数，直接入队');
       // 该字符是操作数，直接入队
@@ -62,6 +71,10 @@ function isHighestPriority(str: string): boolean {
 function isStackHighestPriority(stack: Stack): boolean {
   return stack.peek() === '*' || stack.peek() === '/' ? true : false
 }
+// 判断当前表达式是否为左或右括号()
+function isBracket(str: string): boolean {
+  return str === '(' || str === ')' ? true : false
+}
 // 满足操作符出栈并入队条件，执行出栈入队
 function clearStackToQueue(str: string, stack: Stack, queue: Queue<any>, isEnd: boolean) {
   console.log('满足操作符出栈并入队条件，执行出栈入队');
@@ -70,17 +83,26 @@ function clearStackToQueue(str: string, stack: Stack, queue: Queue<any>, isEnd: 
     // 如果是末尾元素，则一定是操作数，所以直接入队然后把所有栈内操作符入队
     queue.enqueue(str)
     while (stack.size()) {
-      queue.enqueue(stack.pop())
+      if (stack.peek() === '(') {
+        stack.pop()
+        break
+      } else {
+        queue.enqueue(stack.pop())
+      }
     }
   } else {
     // 如果不是末尾元素，则直接将栈内所有操作符入队，再将当前操作符入栈
     while (stack.size()) {
-      queue.enqueue(stack.pop())
+      if (stack.peek() === '(') {
+        stack.pop()
+        break
+      } else {
+        queue.enqueue(stack.pop())
+      }
     }
-    stack.push(str)
+
+    if (str !== ')') stack.push(str)
   }
-
-
   // 最后将当前操作符入栈，通过传入表达式是否为末尾的布尔值来执行不同操作
   // 因为表达式末尾可直接入队
   isEnd ? queue.toString() : stack.toString()
