@@ -35,7 +35,7 @@ class PriorityQueue extends Queue<QueueElementType> {
   dequeue(): void {
     super.dequeue();
   }
-  front(): QueueElementType | undefined {
+  front(): QueueElementType {
     return this.elements[0];
   }
   isEmpty(): boolean {
