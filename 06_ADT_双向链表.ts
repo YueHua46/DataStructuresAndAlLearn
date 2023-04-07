@@ -1,7 +1,7 @@
 // 双向链表
 // 既在链表节点上增加记录上一个节点的结构
 
-class DoublyLinkedNode {
+export class DoublyLinkedNode {
   value: number;
   next: DoublyLinkedNode | null = null;
   previous: DoublyLinkedNode | null = null;
@@ -10,9 +10,9 @@ class DoublyLinkedNode {
   }
 }
 
-class DoublyLinked {
+export class DoublyLinked {
   head: DoublyLinkedNode | null;
-  constructor(head: DoublyLinkedNode) {
+  constructor(head: DoublyLinkedNode | null) {
     this.head = head;
   }
 }

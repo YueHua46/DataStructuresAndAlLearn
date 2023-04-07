@@ -14,7 +14,7 @@ import { QueueElementType } from "./03_ADT_优先级队列";
  */
 type ElementType = string | number;
 
-export class Queue<T extends ElementType | QueueElementType> {
+export class Queue<T> {
   protected elements: Array<T>;
   constructor(...args: Array<T>) {
     this.elements = args;

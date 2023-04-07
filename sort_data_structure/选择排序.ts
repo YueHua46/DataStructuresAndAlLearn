@@ -23,4 +23,4 @@ function swap(arr: Array<number>, i: number, j: number) {
 selectionSort(arr)
 console.log('arr', arr)
 
-export {selectionSort, swap}
+export { selectionSort, swap }
