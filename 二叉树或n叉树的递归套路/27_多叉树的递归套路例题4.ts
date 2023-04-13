@@ -1,4 +1,4 @@
-import { Queue } from "./02_ADT_队列"
+import { Queue } from "../02_ADT_队列"
 // 例题4：派对的最大快乐值问题
 /**
  * 公司的每个员工都符合Employee类的描述。整个公司的人员结构可以看作
