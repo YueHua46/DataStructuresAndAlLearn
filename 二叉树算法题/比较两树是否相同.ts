@@ -29,7 +29,6 @@ export function isSameTree(
   q: DoublyLinkedNode | null,
   p: DoublyLinkedNode | null
 ): boolean {
-  let flag = true;
   const dfs = (
     q: DoublyLinkedNode | null | undefined,
     p: DoublyLinkedNode | null | undefined
@@ -41,6 +40,7 @@ export function isSameTree(
       // 2.对于有一边为空，则返回false
       return false;
     } else if (q.value !== p.value) {
+      // 3.对于两个值不同的节点，返回false
       return false;
     }
     return dfs(q?.previous, p?.previous) && dfs(q?.next, p?.next);
